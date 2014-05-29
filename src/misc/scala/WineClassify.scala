@@ -3,7 +3,10 @@ package misc.scala
 import scala.io.Source
 import scala.collection.immutable.Nil
 
-object Main {
+/*
+ * Wine classify for wine.data (http://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data)
+ */
+object WineClassify {
   
 	def parse(s:String):Array[Float] = (s.split(",").map(x=>x.toFloat))
 	
@@ -11,7 +14,7 @@ object Main {
 		Math.sqrt((f0, f1).zipped.map((x,y) => (x - y) * (x - y)).foldLeft(0f)(_ + _).toDouble).toFloat
 	}
 	
-	def find_class(item:Array[Float], data:List[Array[Float]]):Float = {
+	def find_class_by_nns(item:Array[Float], data:List[Array[Float]]):Float = {
 		var min = Double.MaxValue;
 		var klass = 0f;
 		for(comp <- data){
@@ -40,7 +43,7 @@ object Main {
 		val list = parseAll(lines)
 		var cnt = 0
 		for(item <- list){
-			val result = find_class(item, list);
+			val result = find_class_by_nns(item, list);
 			if(item(0) == result){
 			  cnt = cnt + 1;
 			}
